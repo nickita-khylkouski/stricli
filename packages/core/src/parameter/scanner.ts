@@ -891,7 +891,7 @@ export function buildArgumentScanner<FLAGS extends BaseFlags, ARGS extends BaseA
                 ) as unknown as Promise<PromiseSettledOrElseResult<ARGS>>;
             } else {
                 positionalValues_p = allSettledOrElse(
-                    positional.parameters.map(async (param, i) => {
+                    positional.parameters.map(async (param: PositionalParameter, i: number) => {
                         const placeholder = getPlaceholder(param, i + 1);
                         const input = positionalInputs[i];
                         if (typeof input !== "string") {
@@ -1062,7 +1062,7 @@ export function buildArgumentScanner<FLAGS extends BaseFlags, ARGS extends BaseA
                 // Provide enum values as completions only if positional not yet satisfied
                 if (positionalIndex === 0) {
                     completions.push(
-                        ...positional.values.map<ArgumentCompletion>((value) => {
+                        ...positional.values.map<ArgumentCompletion>((value: string) => {
                             return {
                                 kind: "argument:value",
                                 completion: value,
@@ -1080,7 +1080,7 @@ export function buildArgumentScanner<FLAGS extends BaseFlags, ARGS extends BaseA
                             partial,
                         );
                         completions.push(
-                            ...positionalCompletions.map<ArgumentCompletion>((value) => {
+                            ...positionalCompletions.map<ArgumentCompletion>((value: string) => {
                                 return {
                                     kind: "argument:value",
                                     completion: value,
@@ -1096,7 +1096,7 @@ export function buildArgumentScanner<FLAGS extends BaseFlags, ARGS extends BaseA
                     const commandContext = await loadCommandContext();
                     const positionalCompletions = await nextPositional.proposeCompletions.call(commandContext, partial);
                     completions.push(
-                        ...positionalCompletions.map<ArgumentCompletion>((value) => {
+                        ...positionalCompletions.map<ArgumentCompletion>((value: string) => {
                             return {
                                 kind: "argument:value",
                                 completion: value,
