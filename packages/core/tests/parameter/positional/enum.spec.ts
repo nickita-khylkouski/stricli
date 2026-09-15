@@ -310,8 +310,7 @@ describe("Positional Enum Parameter", () => {
                 partial: "",
                 completionConfig: defaultCompletionConfig,
                 text,
-                context: { process: { stdout: { write: () => {} }, stderr: { write: () => {} } } },
-                includeVersionFlag: false,
+                loadCommandContext: async () => ({ process }),
             });
             const positionalCompletions = completions.filter((c) => c.kind === "argument:value");
 
@@ -328,8 +327,7 @@ describe("Positional Enum Parameter", () => {
                 partial: "s",
                 completionConfig: defaultCompletionConfig,
                 text,
-                context: { process: { stdout: { write: () => {} }, stderr: { write: () => {} } } },
-                includeVersionFlag: false,
+                loadCommandContext: async () => ({ process }),
             });
             const positionalCompletions = completions.filter((c) => c.kind === "argument:value");
 
@@ -348,8 +346,7 @@ describe("Positional Enum Parameter", () => {
                 partial: "",
                 completionConfig: defaultCompletionConfig,
                 text,
-                context: { process: { stdout: { write: () => {} }, stderr: { write: () => {} } } },
-                includeVersionFlag: false,
+                loadCommandContext: async () => ({ process }),
             });
             const positionalCompletions = completions.filter((c) => c.kind === "argument:value");
 
@@ -370,8 +367,7 @@ describe("Positional Enum Parameter", () => {
                 partial: "",
                 completionConfig: defaultCompletionConfig,
                 text,
-                context: { process: { stdout: { write: () => {} }, stderr: { write: () => {} } } },
-                includeVersionFlag: false,
+                loadCommandContext: async () => ({ process }),
             });
             const positionalCompletions = completions.filter((c) => c.kind === "argument:value");
 
