@@ -1,16 +1,3 @@
-/// types.ts
-interface DatabaseConnection {
-  readonly connected: boolean;
-  readonly database: string;
-  connect(): Promise<void>;
-  query(sql: string): Promise<unknown[]>;
-  close(): void;
-}
-
-interface CustomContext extends CommandContext {
-  readonly db?: DatabaseConnection;
-  readonly commandPath?: readonly string[];
-}
 /// impl.ts
 import type { CustomContext } from "./types";
 
@@ -22,18 +9,35 @@ export default async function(this: CustomContext, name: string) {
     this.process.stdout.write(`No database connection for this command\n`);
   }
 }
+/// types.ts
+import type { CommandContext } from "@stricli/core";
+
+export interface DatabaseConnection {
+  readonly connected: boolean;
+  readonly database: string;
+  connect(): Promise<void>;
+  query(sql: string): Promise<unknown[]>;
+  close(): void;
+}
+
+export interface CustomContext extends CommandContext {
+  readonly db?: DatabaseConnection;
+  readonly commandPath?: readonly string[];
+}
 /// spec.ts
-import { buildCommand, type CommandContext } from "@stricli/core";
+import { buildCommand } from "@stricli/core";
 
 export default buildCommand({
   loader: () => import("./impl"),
   parameters: {
     positional: {
-      kind: "parsed",
-      parse: String,
-      docs: {
-        brief: "Name of the resource to query",
-      },
+      kind: "tuple",
+      parameters: [
+        {
+          brief: "Name of the resource to query",
+          parse: String,
+        },
+      ],
     },
   },
   docs: {
